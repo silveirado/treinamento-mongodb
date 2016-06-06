@@ -1,0 +1,9 @@
+<div>
+  <h3>Alunos</h3>
+  <input type="text" name="nome" ng-model="alunos.novoNome"><button ng-click="criar()">Adicionar</button>
+  <ul>
+    <li ng-repeat="aluno in alunosList track by aluno._id">
+      {{aluno.nome}} <a ng-click="excluir(aluno)">[ X ]</a>
+    </li>
+  </ul>
+</div>
