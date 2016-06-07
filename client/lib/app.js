@@ -1,6 +1,7 @@
 import angular       from 'angular';
 import angularMeteor from 'angular-meteor';
 import uiRouter      from 'angular-ui-router';
+import 'bootstrap';
 
 
 angular.module('escola', [angularMeteor, uiRouter]);

@@ -1,4 +1,5 @@
 import _ from 'underscore';
+import moment from 'moment';
 
 angular.module('escola')
   .controller('LivrosCtrl', ['$scope', livrosCtrl]);
@@ -9,6 +10,35 @@ function livrosCtrl($scope) {
 
   $scope.livrosList = [];
 
+  _observarLivros($scope);
+
+  _.extend($scope, {
+    "criar": _criar.bind(vm),
+    "devolver": _devolver.bind(vm)
+  });
+}
+
+function _devolver(livro) {
+  var vm = this;
+
+  Meteor.call('devolver', livro, function () {
+    delete livro.locacao;
+    Util.$apply();
+  });
+
+}
+
+function _criar() {
+  var vm = this;
+    Livros.insert({
+      nome: vm.novoNome
+    });
+    vm.novoNome = '';
+};
+
+
+
+function _observarLivros($scope) {
   Livros
     .find({})
     .observe({
@@ -26,17 +56,4 @@ function livrosCtrl($scope) {
       }
 
     });
-
-
-  $scope.criar = function () {
-      Livros.insert({
-        nome: vm.novoNome
-      });
-      vm.novoNome = '';
-  };
-
-  $scope.excluir = function (doc) {
-    Livros.remove({"_id": doc._id});
-  };
-
 }

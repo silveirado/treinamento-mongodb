@@ -3,7 +3,16 @@
   <input type="text" name="nome" ng-model="alunos.novoNome"><button ng-click="criar()">Adicionar</button>
   <ul>
     <li ng-repeat="aluno in alunosList track by aluno._id">
-      {{aluno.nome}} <a ng-click="excluir(aluno)">[ X ]</a>
+      {{aluno.nome}}
+      <button ng-click="showLocar($index)" ng-hide="locar[$index]">Locar</button>
+      <select ng-options="livro as livro.nome for livro in livrosDisponiveis track by livro._id" ng-model="livro" ng-show="locar[$index]"></select>
+      <button ng-click="concluirLocacao($index, aluno, livro)" ng-show="locar[$index]">Concluir</button>
+      <ul>
+        <li ng-repeat="historico in aluno.historico track by $index">
+          Livro {{historico.livro_id | nomeLivro}},
+          Retirada: {{historico.data_locacao | date: 'dd/MM/yyyy HH:mm'}},
+          Devolução: {{historico.data_devolucao | date: 'dd/MM/yyyy HH:mm'}}</li>
+      </ul>
     </li>
   </ul>
 </div>
